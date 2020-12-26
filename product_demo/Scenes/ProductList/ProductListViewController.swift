@@ -8,16 +8,29 @@
 
 import UIKit
 
+protocol TestBuilding {}
+
 class ProductListViewController: UIViewController {
+
+    typealias Dependencies = HasProductListViewModel & TestBuilding
 
     enum Constants {
         static let minimumCharacterLimitForSearch = 3
     }
 
     @IBOutlet weak var productListTableView: UITableView!
-    var searchController: UISearchController!
 
-    var viewModel: ProductListViewModelProtocol!
+    var searchController: UISearchController!
+    let viewModel: ProductListViewModelProtocol
+
+    init(viewModel: ProductListViewModelProtocol) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("use custom init")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -27,9 +27,10 @@ class ProductTableViewCellViewModel: ProductTableViewCellProtocol {
 }
 
 class ProductTableViewCell: UITableViewCell, UITableViewCellProtocol {
-    @IBOutlet weak var productImageView: UIImageView!
-    @IBOutlet weak var productTitleLabel: UILabel!
-    @IBOutlet weak var productDescriptionLabel: UILabel!
+
+    @IBOutlet private weak var productImageView: UIImageView!
+    @IBOutlet private weak var productTitleLabel: UILabel!
+    @IBOutlet private weak var productDescriptionLabel: UILabel!
 
     var viewModel: ProductTableViewCellProtocol!
 
@@ -45,6 +46,5 @@ class ProductTableViewCell: UITableViewCell, UITableViewCellProtocol {
         productImageView.load(with: product.productImage)
         productTitleLabel.text = product.productName
         productDescriptionLabel.text = String(product.salesPriceIncVat) + "€"
-
     }
 }

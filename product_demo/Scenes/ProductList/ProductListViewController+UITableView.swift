@@ -27,7 +27,7 @@ extension ProductListViewController: UITableViewDataSource, UITableViewDelegate 
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard viewModel.shouldPaginate(row: indexPath.row) else { return }
-        viewModel.currentPage += 1
+//        viewModel.currentPage += 1
         fetchProducts()
     }
 

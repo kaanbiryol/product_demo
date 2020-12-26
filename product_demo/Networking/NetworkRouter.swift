@@ -1,5 +1,5 @@
 //
-//  Router.swift
+//  NetworkRouter.swift
 //  product_demo
 //
 //  Created by Kaan Biryol on 31.05.2020.
@@ -11,21 +11,23 @@ import Foundation
 typealias Parameters = [String: Any]
 typealias NetworkCompletion<T> = (Result<T, NetworkingError>) -> Void
 
-protocol RouterProtocol {
+protocol NetworkRouterProtocol {
     var task: URLSessionTask? { get }
     var session: URLSession { get }
     var urlBuilder: URLBuilderProtocol { get }
-    func request<T: Codable>(request: APIProtocol, completion: @escaping NetworkCompletion<T>)
+    func retrieve<T: Codable>(endpoint: EndpointProtocol,
+                              completion: @escaping NetworkCompletion<T>)
 }
 
-class Router: RouterProtocol {
+class NetworkRouter: NetworkRouterProtocol {
 
     var task: URLSessionTask?
     var session: URLSession = URLSession.shared
     var urlBuilder: URLBuilderProtocol = URLBuilder()
 
-    func request<T: Codable>(request: APIProtocol, completion: @escaping NetworkCompletion<T>) {
-        guard let request = try? urlBuilder.buildRequest(with: request) else { return completion(.failure(.failed)) }
+    func retrieve<T: Codable>(endpoint: EndpointProtocol,
+                              completion: @escaping NetworkCompletion<T>) {
+        guard let request = try? urlBuilder.buildRequest(with: endpoint) else { return completion(.failure(.failed)) }
         task = session.dataTask(with: request, completionHandler: { data, response, error in
             DispatchQueue.main.async {
                 guard error == nil, let responseData = data else { return }

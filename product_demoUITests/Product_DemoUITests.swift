@@ -23,6 +23,7 @@ class product_demoUITests: XCTestCase {
         sleep(1)
         
         XCTAssertEqual(sut.tables.children(matching: .cell).count, 24)
+        
     }
     
-}
+    }

@@ -9,13 +9,13 @@
 import Foundation
 
 protocol URLBuilderProtocol {
-    func buildRequest(with api: APIProtocol) throws -> URLRequest
+    func buildRequest(with api: EndpointProtocol) throws -> URLRequest
 }
 
 class URLBuilder: URLBuilderProtocol {}
 
 extension URLBuilderProtocol {
-    func buildRequest(with api: APIProtocol) throws -> URLRequest {
+    func buildRequest(with api: EndpointProtocol) throws -> URLRequest {
         var urlRequest: URLRequest = URLRequest(url: api.baseURL.appendingPathComponent(api.path))
         urlRequest.httpMethod = api.httpMethod.rawValue
         switch api.httpTask {

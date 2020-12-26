@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 protocol ProductListViewModelProtocol {
-    var service: ProductListServiceProtocol { get }
+    var prouctListService: ProductListRepositoryProtocol { get }
     var products: [Product] { get }
     var currentPage: Int { get set }
     var currentQuery: String { get set }
@@ -22,7 +22,8 @@ protocol ProductListViewModelProtocol {
 
 class ProductListViewModel: ProductListViewModelProtocol {
 
-    var service: ProductListServiceProtocol
+    let prouctListService: ProductListRepositoryProtocol
+
     private(set) var productsResponse: ProductListResponse? {
         didSet {
             currentPage = productsResponse?.currentPage ?? 0
@@ -41,24 +42,24 @@ class ProductListViewModel: ProductListViewModelProtocol {
         return ProductListRequest(page: currentPage, query: currentQuery)
     }
 
-    init(service: ProductListServiceProtocol) {
-        self.service = service
+    init(prouctListService: ProductListRepositoryProtocol) {
+        self.prouctListService = prouctListService
     }
 
-    func fetchProductList(completion: @escaping (ProductListResponse?) -> Void, failure: @escaping (NetworkingError) -> Void) {
-        let productListAPI: ProductListAPI = ProductListAPI.products(request: productListRequest)
-        service.fetchProductList(request: productListAPI, success: { [weak self] (response: ProductListResponse?) in
-            self?.productsResponse = response
-            completion(response)
-        }, failure: { (error) in
-            failure(error)
-        })
+    func fetchProductList(completion: @escaping (ProductListResponse?) -> Void,
+                          failure: @escaping (NetworkingError) -> Void) {
+        prouctListService.fetchProductList(request: productListRequest,
+                                 success: { [weak self ] response in
+                                    self?.productsResponse = response
+                                    completion(response)
+                                 },
+                                 failure: failure)
     }
 
     func cellForRowAt(tableView: UITableView, for indexPath: IndexPath) -> UITableViewCell {
         guard products.count > 0 else { return UITableViewCell() }
         let cell: ProductTableViewCell = tableView.dequeue(cell: ProductTableViewCell.self)
-        let productCellViewModel: ProductTableViewCellProtocol = ProductTableViewCellViewModel(product: products[indexPath.row])
+        let productCellViewModel = ProductTableViewCellViewModel(product: products[indexPath.row])
         cell.populate(with: productCellViewModel)
         return cell
     }
@@ -77,4 +78,3 @@ class ProductListViewModel: ProductListViewModelProtocol {
     }
 
 }
-

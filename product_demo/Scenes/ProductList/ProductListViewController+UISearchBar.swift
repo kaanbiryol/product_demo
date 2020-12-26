@@ -22,7 +22,7 @@ extension ProductListViewController: UISearchBarDelegate, UISearchDisplayDelegat
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         guard let searchText = searchController.searchBar.text else { return }
         guard searchText.count >= Constants.minimumCharacterLimitForSearch else { return }
-        viewModel.currentQuery = searchText
+//        viewModel.currentQuery = searchText
         fetchProducts()
         productListTableView.setContentOffset(.zero, animated: true)
     }
