@@ -29,12 +29,12 @@ private extension Product {
 class product_demoTests: XCTestCase {
 
     var sut: ProductListViewModel!
-    var mockService: ProductListMockService!
+    var mockRepository: ProductListRepositoryProtocol!
     
     override func setUp() {
         super.setUp()
-        mockService = ProductListMockService()
-        sut = ProductListViewModel(service: mockService)
+        mockRepository = ProductListRepository()
+        sut = ProductListViewModel(prouctListService: mockRepository)
     }
     
     func testProductListFetchSuccess() {
@@ -45,9 +45,9 @@ class product_demoTests: XCTestCase {
                                              pageSize: 0,
                                              totalResults: 0,
                                              pageCount: 0)
-        mockService.productResult = mockResult
         
         let fetchExpectation = expectation(description: #function)
+        
         sut.fetchProductList(completion: { (response) in
             productListResponse = response
             fetchExpectation.fulfill()
@@ -66,7 +66,7 @@ class product_demoTests: XCTestCase {
                                              pageSize: 0,
                                              totalResults: 0,
                                              pageCount: 0)
-        mockService.productResult = mockResult
+//        mockService.productResult = mockResult
         
         let fetchExpectation = expectation(description: #function)
         sut.fetchProductList(completion: { (response) in
@@ -95,7 +95,7 @@ class product_demoTests: XCTestCase {
                                              pageSize: 0,
                                              totalResults: 0,
                                              pageCount: 0)
-        mockService.productResult = mockResult
+//        mockService.productResult = mockResult
         
         let fetchExpectation = expectation(description: #function)
         sut.fetchProductList(completion: { (response) in

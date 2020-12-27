@@ -12,8 +12,6 @@ protocol TestBuilding {}
 
 class ProductListViewController: UIViewController {
 
-    typealias Dependencies = HasProductListViewModel & TestBuilding
-
     enum Constants {
         static let minimumCharacterLimitForSearch = 3
     }

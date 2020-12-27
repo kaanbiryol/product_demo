@@ -8,13 +8,20 @@
 
 import Foundation
 
-protocol ProductListRepositoryProtocol: HasNetworkRouter {
+protocol ProductListRepositoryProtocol {
     func fetchProductList(request: ProductListRequest,
                           success: @escaping (ProductListResponse?) -> Void,
                           failure: @escaping (NetworkingError) -> Void)
 }
 
 struct ProductListRepository: ProductListRepositoryProtocol {
+
+    let networkRouter: NetworkRouterProtocol
+
+    init(_ networkRouter: NetworkRouterProtocol) {
+        self.networkRouter = networkRouter
+    }
+
     func fetchProductList(request: ProductListRequest,
                           success: @escaping (ProductListResponse?) -> Void,
                           failure: @escaping (NetworkingError) -> Void) {

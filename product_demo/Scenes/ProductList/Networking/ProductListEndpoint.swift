@@ -32,7 +32,7 @@ enum ProductListEndpoint: EndpointProtocol {
             return .requestParameters(request: request, encoder: .url)
         }
     }
-    
+
 //    static func makeProductListEndpoint(_ request: ProductListRequest) -> Endpoint {
 //        return Endpoint(path: "/search",
 //                        method: .get,

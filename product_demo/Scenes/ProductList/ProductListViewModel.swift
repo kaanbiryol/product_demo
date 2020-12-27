@@ -18,6 +18,7 @@ protocol ProductListViewModelProtocol {
     func cellForRowAt(tableView: UITableView, for indexPath: IndexPath) -> UITableViewCell
     func numberOfRowsInSection(for section: Int) -> Int
     func shouldPaginate(row: Int) -> Bool
+    func didSelectProduct(_ product: Product)
 }
 
 class ProductListViewModel: ProductListViewModelProtocol {
@@ -77,4 +78,8 @@ class ProductListViewModel: ProductListViewModelProtocol {
         products = []
     }
 
+    func didSelectProduct(_ product: Product) {
+        
+    }
+    
 }
