@@ -11,16 +11,16 @@ import UIKit
 
 extension AppModule: ProductDetailsComponent {
 
-    func makeProductDetailsViewModel() -> ProductDetailsViewModelProtocol {
-        return ProductDetailsViewModel()
+    func makeProductDetailsViewModel(payload: ProductDetailsViewModelPayload) -> ProductDetailsViewModelProtocol {
+        return ProductDetailsViewModel(payload: payload)
     }
 
     func makeProductDetailsCoordinator(with navigationController: UINavigationController) -> ProductDetailsCoordinator {
         return ProductDetailsCoordinator(navigationController: navigationController, dependencies: self)
     }
 
-    func makeProductDetailsViewController() -> UIViewController {
-        return ProductDetailsViewController(viewModel: makeProductDetailsViewModel())
+    func makeProductDetailsViewController(payload: ProductDetailsViewModelPayload) -> UIViewController {
+        return ProductDetailsViewController(viewModel: makeProductDetailsViewModel(payload: payload))
     }
 
 }

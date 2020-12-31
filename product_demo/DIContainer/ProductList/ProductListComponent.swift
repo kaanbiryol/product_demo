@@ -9,9 +9,12 @@
 import Foundation
 import UIKit
 
+protocol HasProductListRepository {
+    var productListRepository: ProductListRepositoryProtocol { get }
+}
+
 protocol ProductListComponent {
-    func makeProductListRepository() -> ProductListRepositoryProtocol
-    func makeProductListViewModel() -> ProductListViewModelProtocol
-    func makeProductListViewController() -> UIViewController
+    func makeProductListViewModel(actions: ProductListViewModelActions) -> ProductListViewModelProtocol
+    func makeProductListViewController(actions: ProductListViewModelActions) -> UIViewController
     func makeProductListCoordinator(with navigationController: UINavigationController) -> ProductListCoordinator
 }

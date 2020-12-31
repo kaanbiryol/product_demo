@@ -14,6 +14,18 @@ protocol ProductListRepositoryProtocol {
                           failure: @escaping (NetworkingError) -> Void)
 }
 
+protocol UserInfoRepositoryProtocol {
+    func fetchUserInfo(completion: () -> Void)
+}
+
+struct UserInfoRepository: UserInfoRepositoryProtocol {
+
+    func fetchUserInfo(completion: () -> Void) {
+        completion()
+    }
+
+}
+
 struct ProductListRepository: ProductListRepositoryProtocol {
 
     let networkRouter: NetworkRouterProtocol

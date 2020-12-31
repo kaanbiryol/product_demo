@@ -11,7 +11,7 @@ import UIKit
 
 final class ProductListCoordinator {
 
-    typealias Dependencies = ProductListComponent
+    typealias Dependencies = ProductListComponent & ProductDetailsComponent
 
     private weak var navigationController: UINavigationController?
     private let dependencies: Dependencies
@@ -23,8 +23,14 @@ final class ProductListCoordinator {
     }
 
     func start() {
-        let viewController = dependencies.makeProductListViewController()
+        let actions = ProductListViewModelActions(didSelectProduct: routeToProductDetails)
+        let viewController = dependencies.makeProductListViewController(actions: actions)
         navigationController?.pushViewController(viewController, animated: true)
+    }
+
+    func routeToProductDetails(_ product: Product) {
+        let coordinator = dependencies.makeProductDetailsCoordinator(with: navigationController!)
+        coordinator.start(with: product)
     }
 
 }

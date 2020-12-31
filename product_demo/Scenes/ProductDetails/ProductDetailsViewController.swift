@@ -11,6 +11,8 @@ import UIKit
 
 class ProductDetailsViewController: UIViewController {
 
+    @IBOutlet private weak var buyButton: UIButton!
+
     let viewModel: ProductDetailsViewModelProtocol
 
     init(viewModel: ProductDetailsViewModelProtocol) {
@@ -25,6 +27,16 @@ class ProductDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Product Details"
+        buyButton.setTitle("Buy", for: .normal)
+        buyButton.addTarget(self, action: #selector(buy), for: .touchUpInside)
+    }
+
+    @objc private func buy() {
+        viewModel.buy()
+    }
+
+    deinit {
+        debugPrint("deinit controller : \(self)")
     }
 
 }

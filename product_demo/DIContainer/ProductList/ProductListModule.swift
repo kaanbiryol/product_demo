@@ -11,20 +11,23 @@ import UIKit
 
 extension AppModule: ProductListComponent {
 
-    func makeProductListRepository() -> ProductListRepositoryProtocol {
-        return ProductListRepository(networkRouter)
+    func makeProductListViewModel(actions: ProductListViewModelActions) -> ProductListViewModelProtocol {
+        return ProductListViewModel(dependencies: self,
+                                    actions: actions)
     }
 
-    func makeProductListViewModel() -> ProductListViewModelProtocol {
-        return ProductListViewModel(prouctListService: makeProductListRepository())
-    }
-
-    func makeProductListViewController() -> UIViewController {
-        return ProductListViewController(viewModel: makeProductListViewModel())
+    func makeProductListViewController(actions: ProductListViewModelActions) -> UIViewController {
+        return ProductListViewController(viewModel: makeProductListViewModel(actions: actions))
     }
 
     func makeProductListCoordinator(with navigationController: UINavigationController) -> ProductListCoordinator {
         return ProductListCoordinator(navigationController: navigationController, dependencies: self)
     }
 
+}
+
+extension AppModule: HasProductListRepository {
+    var productListRepository: ProductListRepositoryProtocol {
+        return ProductListRepository(networkRouter)
+    }
 }

@@ -8,8 +8,6 @@
 
 import UIKit
 
-protocol TestBuilding {}
-
 class ProductListViewController: UIViewController {
 
     enum Constants {

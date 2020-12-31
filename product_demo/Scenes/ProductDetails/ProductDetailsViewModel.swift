@@ -8,6 +8,33 @@
 
 import Foundation
 
-protocol ProductDetailsViewModelProtocol {}
+struct ProductDetailsViewModelPayload {
+    let product: Product
+    let didBuyProduct: (Product) -> Void
+}
 
-class ProductDetailsViewModel: ProductDetailsViewModelProtocol {}
+protocol ProductDetailsViewModelProtocol {
+    var payload: ProductDetailsViewModelPayload { get }
+//    var actions: ProductDetailsViewModelActions { get }
+    func buy()
+}
+
+class ProductDetailsViewModel: ProductDetailsViewModelProtocol {
+
+//    var actions: ProductDetailsViewModelActions
+    var payload: ProductDetailsViewModelPayload
+
+    //Generally use a Payload for sending payload
+    init(payload: ProductDetailsViewModelPayload) {
+        self.payload = payload
+    }
+
+    func buy() {
+        payload.didBuyProduct(payload.product)
+    }
+
+    deinit {
+        debugPrint("deinit viewmodel : \(self)")
+    }
+
+}

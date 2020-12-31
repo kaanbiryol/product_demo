@@ -22,9 +22,19 @@ final class ProductDetailsCoordinator {
         self.dependencies = dependencies
     }
 
-    func start() {
-        let viewController = dependencies.makeProductDetailsViewController()
+    func start(with product: Product) {
+        let payload = ProductDetailsViewModelPayload(product: product, didBuyProduct: didBuyProduct(_:))
+        let viewController = dependencies.makeProductDetailsViewController(payload: payload)
         navigationController?.pushViewController(viewController, animated: true)
+    }
+
+    func didBuyProduct(_ product: Product) {
+        print("Did buy product: ", product)
+        navigationController?.popViewController(animated: true)
+    }
+
+    deinit {
+        debugPrint("deinit coordinator: \(self)")
     }
 
 }

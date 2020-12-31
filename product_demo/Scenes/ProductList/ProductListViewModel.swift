@@ -9,12 +9,20 @@
 import Foundation
 import UIKit
 
+struct ProductListViewModelActions {
+    let didSelectProduct: (Product) -> Void
+}
+
 protocol ProductListViewModelProtocol {
-    var prouctListService: ProductListRepositoryProtocol { get }
+
+    typealias Dependencies = HasProductListRepository
+
+    var dependencies: Dependencies { get }
     var products: [Product] { get }
     var currentPage: Int { get set }
     var currentQuery: String { get set }
-    func fetchProductList(completion: @escaping (ProductListResponse?) -> Void, failure: @escaping (NetworkingError) -> Void)
+    func fetchProductList(completion: @escaping (ProductListResponse?) -> Void,
+                          failure: @escaping (NetworkingError) -> Void)
     func cellForRowAt(tableView: UITableView, for indexPath: IndexPath) -> UITableViewCell
     func numberOfRowsInSection(for section: Int) -> Int
     func shouldPaginate(row: Int) -> Bool
@@ -23,7 +31,8 @@ protocol ProductListViewModelProtocol {
 
 class ProductListViewModel: ProductListViewModelProtocol {
 
-    let prouctListService: ProductListRepositoryProtocol
+    let actions: ProductListViewModelActions
+    let dependencies: Dependencies
 
     private(set) var productsResponse: ProductListResponse? {
         didSet {
@@ -43,13 +52,15 @@ class ProductListViewModel: ProductListViewModelProtocol {
         return ProductListRequest(page: currentPage, query: currentQuery)
     }
 
-    init(prouctListService: ProductListRepositoryProtocol) {
-        self.prouctListService = prouctListService
+    init(dependencies: Dependencies,
+         actions: ProductListViewModelActions) {
+        self.dependencies = dependencies
+        self.actions = actions
     }
 
     func fetchProductList(completion: @escaping (ProductListResponse?) -> Void,
                           failure: @escaping (NetworkingError) -> Void) {
-        prouctListService.fetchProductList(request: productListRequest,
+        dependencies.productListRepository.fetchProductList(request: productListRequest,
                                  success: { [weak self ] response in
                                     self?.productsResponse = response
                                     completion(response)
@@ -79,7 +90,7 @@ class ProductListViewModel: ProductListViewModelProtocol {
     }
 
     func didSelectProduct(_ product: Product) {
-        
+        actions.didSelectProduct(product)
     }
-    
+
 }

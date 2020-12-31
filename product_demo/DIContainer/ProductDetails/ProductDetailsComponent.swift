@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 protocol ProductDetailsComponent {
-    func makeProductDetailsViewModel() -> ProductDetailsViewModelProtocol
-    func makeProductDetailsViewController() -> UIViewController
+    func makeProductDetailsViewModel(payload: ProductDetailsViewModelPayload) -> ProductDetailsViewModelProtocol
+    func makeProductDetailsViewController(payload: ProductDetailsViewModelPayload) -> UIViewController
     func makeProductDetailsCoordinator(with navigationController: UINavigationController) -> ProductDetailsCoordinator
 }

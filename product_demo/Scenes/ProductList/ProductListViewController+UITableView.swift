@@ -30,7 +30,7 @@ extension ProductListViewController: UITableViewDataSource, UITableViewDelegate 
 //        viewModel.currentPage += 1
         fetchProducts()
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let product = viewModel.products[indexPath.row]
         viewModel.didSelectProduct(product)
