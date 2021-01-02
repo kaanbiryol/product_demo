@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-final class ProductDetailsCoordinator {
+class ProductDetailsCoordinator {
 
     typealias Dependencies = ProductDetailsComponent
 
@@ -29,7 +29,6 @@ final class ProductDetailsCoordinator {
     }
 
     func didBuyProduct(_ product: Product) {
-        print("Did buy product: ", product)
         navigationController?.popViewController(animated: true)
     }
 

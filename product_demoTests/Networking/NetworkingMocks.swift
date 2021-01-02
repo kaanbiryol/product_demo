@@ -15,9 +15,9 @@ class MockNetworkRouter<T: Codable>: NetworkRouterProtocol {
     var session: URLSession = URLSession.shared
     var urlBuilder: URLBuilderProtocol = URLBuilder()
 
-    var result: Result<T, NetworkingError>
+    var result: Result<T, NetworkingError>?
 
-    init(result: Result<T, NetworkingError>) {
+    init(result: Result<T, NetworkingError>?) {
         self.result = result
     }
 
@@ -31,27 +31,27 @@ class MockNetworkRouter<T: Codable>: NetworkRouterProtocol {
 struct MockRequest: Codable {}
 
 struct MockResponse: Codable {
-      let field: String
-  }
+    let field: String
+}
 
 enum MockEndpoint: EndpointProtocol {
     
     case fetchMock(_ request: ProductListRequest)
-
+    
     var path: String {
         switch self {
         case .fetchMock:
             return "/mock"
         }
     }
-
+    
     var httpMethod: HTTPMethod {
         switch self {
         case .fetchMock:
             return .get
         }
     }
-
+    
     var httpTask: HTTPTask {
         switch self {
         case .fetchMock(let request):

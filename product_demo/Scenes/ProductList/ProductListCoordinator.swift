@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-final class ProductListCoordinator {
+class ProductListCoordinator {
 
     typealias Dependencies = ProductListComponent & ProductDetailsComponent
 

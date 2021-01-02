@@ -10,7 +10,7 @@ import Foundation
 
 protocol ProductListRepositoryProtocol {
     func fetchProductList(request: ProductListRequest,
-                          success: @escaping (ProductListResponse?) -> Void,
+                          success: @escaping (ProductListResponse) -> Void,
                           failure: @escaping (NetworkingError) -> Void)
 }
 
@@ -35,10 +35,10 @@ struct ProductListRepository: ProductListRepositoryProtocol {
     }
 
     func fetchProductList(request: ProductListRequest,
-                          success: @escaping (ProductListResponse?) -> Void,
+                          success: @escaping (ProductListResponse) -> Void,
                           failure: @escaping (NetworkingError) -> Void) {
         networkRouter.retrieve(endpoint: ProductListEndpoint.products(request),
-                               completion: { (result: Result<ProductListResponse?, NetworkingError>) in
+                               completion: { (result: Result<ProductListResponse, NetworkingError>) in
                                 switch result {
                                 case .success(let response):
                                     success(response)

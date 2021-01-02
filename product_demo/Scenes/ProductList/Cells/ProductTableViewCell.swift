@@ -28,9 +28,9 @@ class ProductTableViewCellViewModel: ProductTableViewCellProtocol {
 
 class ProductTableViewCell: UITableViewCell, UITableViewCellProtocol {
 
-    @IBOutlet private weak var productImageView: UIImageView!
-    @IBOutlet private weak var productTitleLabel: UILabel!
-    @IBOutlet private weak var productDescriptionLabel: UILabel!
+    @IBOutlet weak var productImageView: UIImageView!
+    @IBOutlet weak var productTitleLabel: UILabel!
+    @IBOutlet weak var productDescriptionLabel: UILabel!
 
     var viewModel: ProductTableViewCellProtocol!
 
